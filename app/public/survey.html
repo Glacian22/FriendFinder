@@ -7,6 +7,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    Oh hai it's a survey
+    <form action="/api/friends" method="post">
+        Name:<br>
+        <input type="text" name="name" value="" placeholder="name">
+        <br><br>
+
+        Link to a photo of you name:<br>
+        <input type="text" name="lastname" value="" placeholder="www.someimage.com/agt.jpeg">
+        <br><br>
+
+        Breakfast food?
+        <br>
+        <input type="radio" name="breakfast" value="1"> Waffles<br>
+        <input type="radio" name="breakfast" value="2"> Pancakes<br>
+        <input type="radio" name="breakfast" value="3"> Eggs<br>
+        <input type="radio" name="breakfast" value="4"> Bacon
+        <br><br>
+
+        Which of these games would you enjoy?
+        <br>
+        <input type="radio" name="game" value="1"> RPG<br>
+        <input type="radio" name="game" value="2"> Board game<br>
+        <input type="radio" name="game" value="3"> Sim game<br>
+        <input type="radio" name="game" value="4"> First person shooter
+        <br><br>
+
+        Vanilla or chocolate icecream?        
+        <br>
+        <input type="radio" name="flavor" value="1"> Vanilla<br>
+        <input type="radio" name="flavor" value="2"> Chocolate
+        <br><br>
+
+        Vanilla or kinky?
+        <br>
+        <input type="radio" name="kink" value="1"> Vanilla<br>
+        <input type="radio" name="kink" value="2"> Sorta vanilla<br>
+        <input type="radio" name="kink" value="3"> Sorta kinky<br>
+        <input type="radio" name="kink" value="4"> Kinky
+        <br><br>
+
+        Do you like to exercise?
+        <br>
+        <input type="radio" name="exercise" value="1"> Nah<br>
+        <input type="radio" name="exercise" value="2"> Yah<br>
+        <input type="radio" name="exercise" value="3"> WOO!<br>
+        <input type="radio" name="exercise" value="4"> DO YOU EVEN LIFT??
+        <br><br>
+
+        <input type="submit" value="Submit">
+      </form> 
 </body>
 </html>
