@@ -1,4 +1,3 @@
-var friends = require("./../data/friends")
 var dbMethods = require("./../data/friendsDB")
 
 var uploadSurvey = dbMethods.uploadSurvey;
