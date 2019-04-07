@@ -23,7 +23,9 @@ module.exports = function (app) {
         dbObj.photo = req.body.photo;
         dbObj.questions = JSON.stringify([parseInt(req.body.breakfast), parseInt(req.body.game), parseInt(req.body.flavor), parseInt(req.body.kink), parseInt(req.body.exercise)])
         uploadSurvey(dbObj)
-        res.redirect(302, "/")
+
+        // not redirecting to root, using survey page for further interaction and logi
+        // res.redirect(302, "/")
     })
 
 }

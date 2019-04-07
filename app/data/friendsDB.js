@@ -19,11 +19,11 @@ connection.connect(function (err) {
     console.log("connected as id " + connection.threadId + "\n");
 });
 
-//INSERT INTO friends (name, photo, questions) VALUES (
-// 'Jeff',
-// 'https://www.bobswatches.com/rolex-blog/wp-content/uploads/2018/07/Cartier-Tank-Photo-by-Michael-J-Fox-823x1024.png', 
-// '[2, 3, 2, 3, 1]'
-// )
+// The two database manipulation functions which will be packaged up and exported
+//
+//
+
+// Sends the form data to the mysql db for insertion
 var uploadSurvey = function (survey) {
 
     var query = connection.query(
@@ -32,6 +32,7 @@ var uploadSurvey = function (survey) {
         })
 }
 
+// Retrieves the full "friends" table from the db, uses passed in "res" response object to return the data
 var getFriendList = function (res) {
     var query = connection.query(
         "SELECT * FROM friends", function (err, result) {

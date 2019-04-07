@@ -5,15 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Survey</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="frontEnd.js"></script>
 </head>
 <body>
-    <form action="/api/friends" method="post">
+    <form id="form" action="/api/friends" method="post">
         Name:<br>
         <input type="text" name="name" value="" placeholder="name">
         <br><br>
 
         Link to a photo of you name:<br>
-        <input type="text" name="photo" value="" placeholder="www.someimage.com/agt.jpeg">
+        <input type="text" name="photo" value="" placeholder="www.someimage.com/">
         <br><br>
 
         Breakfast food?
