@@ -17,7 +17,7 @@ require("./app/routing/htmlRoutes")(app)
 
 // Keeps heroku's clearDB connection from timing out after 60 sec
 var keepAlive = dbMethods.keepAlive;
-setTimeout(keepAlive, 45000);
+setInterval(keepAlive, 45000);
 
 // =============================================================================
 // LISTENER
