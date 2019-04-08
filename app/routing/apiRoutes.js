@@ -18,14 +18,14 @@ module.exports = function (app) {
         console.log("Incoming Form Data:", req.body)
 
         //convert survey to db obj form
-        var dbObj = {};
-        dbObj.name = req.body.name;
-        dbObj.photo = req.body.photo;
-        dbObj.questions = JSON.stringify([parseInt(req.body.breakfast), parseInt(req.body.game), parseInt(req.body.flavor), parseInt(req.body.kink), parseInt(req.body.exercise)])
-        uploadSurvey(dbObj)
+        var user = {};
+        user.name = req.body.name;
+        user.photo = req.body.photo;
+        user.questions = JSON.stringify([parseInt(req.body.breakfast), parseInt(req.body.game), parseInt(req.body.flavor), parseInt(req.body.kink), parseInt(req.body.exercise)])
+        uploadSurvey(user, res)
 
-        // not redirecting to root, using survey page for further interaction and logi
-        // res.redirect(302, "/")
+        // not redirecting to root, using survey page for further interaction and logic
+  
     })
 
 }
