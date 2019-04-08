@@ -1,8 +1,7 @@
 // Dependencies
 // =============================================================
 var express = require("express");
-var keepAlive = dbMethods.keepAlive;
-
+var dbMethods = require("./app/data/friendsDB")
 
 // Sets up the Express App
 // =============================================================
@@ -17,7 +16,8 @@ require("./app/routing/apiRoutes")(app)
 require("./app/routing/htmlRoutes")(app)
 
 // Keeps heroku's clearDB connection from timing out after 60 sec
-var dbAlive = setTimeout(keepAlive, 45000)
+var keepAlive = dbMethods.keepAlive;
+setTimeout(keepAlive, 45000);
 
 // =============================================================================
 // LISTENER
