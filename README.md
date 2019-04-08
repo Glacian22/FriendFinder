@@ -1,5 +1,6 @@
 # FriendFinder
 
+https://intense-taiga-56239.herokuapp.com/
 It's a mini dating app: fill out the survey to get matched to another user.
 
 ### Technologies Used
@@ -12,3 +13,4 @@ It's a mini dating app: fill out the survey to get matched to another user.
 ### Known Bugs
 * form doesn't yet validate
 * need to set up redirect after getting matched
+* still fugly, need to add some styling
