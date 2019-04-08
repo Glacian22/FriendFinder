@@ -90,6 +90,8 @@
     <script>
         const survey = document.forms.surveyform;
         let user = {
+            name: "",
+            photo: "",
             questions: []
         }
         $("#form").submit(function (event) {
@@ -101,6 +103,8 @@
             user.questions.push(survey.flavor.value);
             user.questions.push(survey.kink.value);
             user.questions.push(survey.exercise.value);
+
+            console.log("user.questions:", user.questions)
 
             $.post("api/friends", user, function () {
                 console.log("uploaded", user)

@@ -21,7 +21,14 @@ module.exports = function (app) {
         var user = {};
         user.name = req.body.name;
         user.photo = req.body.photo;
-        user.questions = JSON.stringify([parseInt(req.body.breakfast), parseInt(req.body.game), parseInt(req.body.flavor), parseInt(req.body.kink), parseInt(req.body.exercise)])
+        user.questions = [];
+        // user.questions = JSON.stringify([parseInt(req.body.breakfast), parseInt(req.body.game), parseInt(req.body.flavor), parseInt(req.body.kink), parseInt(req.body.exercise)])
+
+        for (var i=0; i< req.body.questions.length; i++){
+            user.questions.push(req.body.questions[i])
+        }
+        user.questions = JSON.stringify(user.questions);
+
         uploadSurvey(user, res)
 
         // not redirecting to root, using survey page for further interaction and logic
