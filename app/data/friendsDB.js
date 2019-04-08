@@ -23,12 +23,16 @@ connection.connect(function (err) {
 //
 //
 
-// Sends the form data to the mysql db for insertion
-var uploadSurvey = function (survey) {
+// Sends the form data to the mysql db for insertion, runs compatibility logic and responds with res object
+var uploadSurvey = function (survey, res) {
 
     var query = connection.query(
         "INSERT INTO friends (name, photo, questions) VALUES (?, ?, ?)", [survey.name, survey.photo, survey.questions], function (err, result) {
-            if (err) throw err;
+            if (err) {
+                console.log("DB error")
+                throw err;
+            }
+            res.end()
         })
 }
 
@@ -40,9 +44,9 @@ var getFriendList = function (res) {
             if (err) throw err;
             res.json(result);
         })
-    }
+}
 
 module.exports = {
-            uploadSurvey: uploadSurvey,
-            getFriendList: getFriendList
-        }
+    uploadSurvey: uploadSurvey,
+    getFriendList: getFriendList
+}

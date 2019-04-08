@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Survey</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="frontEnd.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <form id="form" action="/api/friends" method="post">
+    <!-- action="/api/friends" method="post" removed -->
+    <form id="form" name="surveyform">
         Name:<br>
         <input type="text" name="name" value="" placeholder="name">
         <br><br>
@@ -34,7 +42,7 @@
         <input type="radio" name="game" value="4"> First person shooter
         <br><br>
 
-        Vanilla or chocolate icecream?        
+        Vanilla or chocolate icecream?
         <br>
         <input type="radio" name="flavor" value="1"> Vanilla<br>
         <input type="radio" name="flavor" value="2"> Chocolate
@@ -56,7 +64,92 @@
         <input type="radio" name="exercise" value="4"> DO YOU EVEN LIFT??
         <br><br>
 
-        <input type="submit" value="Submit">
-      </form> 
+        <input id="btn" type="submit" value="Submit">
+    </form>
+
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Your Friend Match!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="name"></p>
+                    <div id="img-div"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const survey = document.forms.surveyform;
+        let user = {
+            questions: []
+        }
+        $("#form").submit(function (event) {
+            event.preventDefault();
+            user.name = (survey.name.value);
+            user.photo = (survey.photo.value);
+            user.questions.push(survey.breakfast.value);
+            user.questions.push(survey.game.value);
+            user.questions.push(survey.flavor.value);
+            user.questions.push(survey.kink.value);
+            user.questions.push(survey.exercise.value);
+
+            $.post("api/friends", user, function () {
+                console.log("uploaded", user)
+
+                $.get("/api/friends", function (data) {
+                    console.log(data)
+                    var bestie;
+                    var score = 50;
+                    data.forEach(function (person) {
+                        //see what each possible friend's compatibility is with the user
+                        if (person.name !== user.name) {
+                            var myscore = 0;
+                            friendAns = JSON.parse(person.questions)
+
+                            for (var i = 0; i < user.questions.length; i++) {
+                                myscore += Math.abs(parseInt(user.questions[i]) - friendAns[i])
+                            }
+
+                            // lowest score is best
+                            if (myscore < score) {
+                                score = myscore
+                                bestie = person
+                            }
+
+                            console.log("Bestie", bestie.name);
+                            console.log("Bestie photo", bestie.photo)
+                        }
+                    })
+
+                    // stick bestie info into modal and show 
+                    $("#name").text("Name: " + bestie.name)
+                    
+                    $("#img-div").html('<img style="height:300px;width:auto;" src="' + bestie.photo + '">')
+                    $(".modal").modal("show")
+                })
+            })
+
+        });
+    </script>
+
+
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
