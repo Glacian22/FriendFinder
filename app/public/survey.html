@@ -67,26 +67,75 @@
         <input id="btn" type="submit" value="Submit">
     </form>
 
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Your Friend Match!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="name"></p>
+                    <div id="img-div"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         const survey = document.forms.surveyform;
-        let user = {}
-        $("form").submit(function () {
+        let user = {
+            questions: []
+        }
+        $("#form").submit(function (event) {
+            event.preventDefault();
             user.name = (survey.name.value);
             user.photo = (survey.photo.value);
-            user.breakfast = (survey.breakfast.value);
-            user.game = (survey.game.value);
-            user.flavor = (survey.flavor.value);
-            user.kink = (survey.kink.value);
-            user.exercise = (survey.exercise.value);
-            console.log(user)
+            user.questions.push(survey.breakfast.value);
+            user.questions.push(survey.game.value);
+            user.questions.push(survey.flavor.value);
+            user.questions.push(survey.kink.value);
+            user.questions.push(survey.exercise.value);
 
-            $.post("api/friends", user, function (postData) {
-                console.log(postData)
-                // console.log("uploaded", user)
-                // $.get("/api/friends", function(data){
-                //     alert(JSON.parse(data))
-                // })
+            $.post("api/friends", user, function () {
+                console.log("uploaded", user)
+
+                $.get("/api/friends", function (data) {
+                    console.log(data)
+                    var bestie;
+                    var score = 50;
+                    data.forEach(function (person) {
+                        //see what each possible friend's compatibility is with the user
+                        if (person.name !== user.name) {
+                            var myscore = 0;
+                            friendAns = JSON.parse(person.questions)
+
+                            for (var i = 0; i < user.questions.length; i++) {
+                                myscore += Math.abs(parseInt(user.questions[i]) - friendAns[i])
+                            }
+
+                            // lowest score is best
+                            if (myscore < score) {
+                                score = myscore
+                                bestie = person
+                            }
+
+                            console.log("Bestie", bestie.name);
+                            console.log("Bestie photo", bestie.photo)
+                        }
+                    })
+
+                    // stick bestie info into modal and show 
+                    $("#name").text("Name: " + bestie.name)
+                    
+                    $("#img-div").html('<img style="height:300px;width:auto;" src="' + bestie.photo + '">')
+                    $(".modal").modal("show")
+                })
             })
 
         });

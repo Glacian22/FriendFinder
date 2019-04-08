@@ -32,7 +32,7 @@ var uploadSurvey = function (survey, res) {
                 console.log("DB error")
                 throw err;
             }
-            res.send({empty: "object"})
+            res.end()
         })
 }
 
