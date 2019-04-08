@@ -19,7 +19,7 @@ connection.connect(function (err) {
     console.log("connected as id " + connection.threadId + "\n");
 });
 
-// The two database manipulation functions which will be packaged up and exported
+// The 3 database manipulation functions which will be packaged up and exported
 //
 //
 
@@ -46,7 +46,13 @@ var getFriendList = function (res) {
         })
 }
 
+var keepAlive = function(){
+    var query = connection.query(
+        "SELECT 1", function (err, result) {})
+}
+
 module.exports = {
     uploadSurvey: uploadSurvey,
-    getFriendList: getFriendList
+    getFriendList: getFriendList,
+    keepAlive: keepAlive
 }
